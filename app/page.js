@@ -1,7 +1,7 @@
 'use client'
 import { useEffect, useState } from 'react'
 import MobileNav from '@/components/MobileNav'
- 
+
 const trips = [
   { id: 'forbidden-tour', title: 'Forbidden Tour', category: 'SKI TRAVERSE', location: 'North Cascades', duration: '4 Days', difficulty: 'Expert', price: 1395, spotsLeft: 3, season: 'Spring', image: 'https://images.unsplash.com/photo-1551698618-1dfe5d97d256?w=900&q=90', shortDesc: 'The Cascades answer to the Haute Route. Three passes. Three peaks. Endless descents.' },
   { id: 'steep-camp', title: 'Steep Camp', category: 'SKI COURSE', location: 'North Cascades', duration: '3 Days', difficulty: 'Advanced', price: 975, spotsLeft: 5, season: 'Winter', image: 'https://images.unsplash.com/photo-1548550023-2bdb3c5beed7?w=900&q=90', shortDesc: 'Master technical steep terrain. Small groups. Maximum progression.' },
@@ -10,18 +10,18 @@ const trips = [
   { id: 'alaska-ski-mo', title: 'Alaska Range', category: 'EXPEDITION', location: 'Alaska Range', duration: '10 Days', difficulty: 'Expert', price: 4800, spotsLeft: 4, season: 'Spring', image: 'https://images.unsplash.com/photo-1516592673884-4a382d1124c2?w=900&q=90', shortDesc: 'Fly-in glacier skiing. First descents. Remote camps. Ten days.' },
   { id: 'morning-star-peak', title: 'Morning Star', category: 'ROCK CLIMB', location: 'North Cascades', duration: '1 Day', difficulty: 'Intermediate', price: 425, spotsLeft: 6, season: 'Summer', image: 'https://images.unsplash.com/photo-1522163182402-834f871fd851?w=900&q=90', shortDesc: 'Classic multi-pitch granite. II+ 5.10a. Best moderate in the range.' },
 ]
- 
+
 const difficultyConfig = {
   Beginner: { dot: '#4ade80' }, Intermediate: { dot: '#60a5fa' },
   Advanced: { dot: '#fbbf24' }, Expert: { dot: '#f87171' },
 }
- 
+
 export default function HomePage() {
   const [heroLoaded, setHeroLoaded] = useState(false)
   const [scrollY, setScrollY] = useState(0)
   const [hoveredTrip, setHoveredTrip] = useState(null)
   const [isMobile, setIsMobile] = useState(false)
- 
+
   useEffect(() => {
     const timer = setTimeout(() => setHeroLoaded(true), 100)
     const handleScroll = () => setScrollY(window.scrollY)
@@ -31,23 +31,27 @@ export default function HomePage() {
     window.addEventListener('resize', checkMobile)
     return () => { clearTimeout(timer); window.removeEventListener('scroll', handleScroll); window.removeEventListener('resize', checkMobile) }
   }, [])
- 
+
   const px = isMobile ? '20px' : '48px'
   const py = isMobile ? '72px' : '120px'
- 
+
   return (
     <div style={{ background: '#080c10', minHeight: '100vh', fontFamily: "'DM Sans', sans-serif", overflowX: 'hidden' }}>
-      <MobileNav />
- 
+
       {/* HERO */}
       <section style={{ position: 'relative', height: '100vh', minHeight: 600, overflow: 'hidden' }}>
+        {/* Navbar sits inside hero so it overlays the image */}
+        <div style={{ position: 'absolute', top: 0, left: 0, right: 0, zIndex: 50 }}>
+          <MobileNav />
+        </div>
+
         <div style={{ position: 'absolute', inset: 0, transform: isMobile ? 'none' : `translateY(${scrollY * 0.35}px)` }}>
-          <img src="https://images.unsplash.com/photo-1551698618-1dfe5d97d256?w=1920&q=95" alt="" style={{ width: '100%', height: '115%', objectFit: 'cover', objectPosition: 'center 30%' }} />
+          <img src="https://images.unsplash.com/photo-1551698618-1dfe5d97d256?w=1920&q=95" alt="" style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center 30%' }} />
         </div>
         <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(180deg, rgba(8,12,16,0.3) 0%, rgba(8,12,16,0.05) 35%, rgba(8,12,16,0.7) 75%, rgba(8,12,16,1) 100%)' }} />
         <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(90deg, rgba(8,12,16,0.8) 0%, rgba(8,12,16,0.15) 55%, transparent 100%)' }} />
         <div style={{ position: 'absolute', inset: 0, opacity: 0.03, backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")`, backgroundRepeat: 'repeat', backgroundSize: '128px' }} />
- 
+
         <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, padding: `0 ${px} ${isMobile ? '48px' : '80px'}`, zIndex: 10 }}>
           <div style={{ opacity: heroLoaded ? 1 : 0, transform: heroLoaded ? 'none' : 'translateY(18px)', transition: 'all 0.8s ease 0.1s', display: 'flex', alignItems: 'center', gap: 12, marginBottom: 18 }}>
             <div style={{ width: 28, height: 1, background: '#c8370a', flexShrink: 0 }} />
@@ -71,7 +75,7 @@ export default function HomePage() {
           </div>
         </div>
       </section>
- 
+
       {/* STATS */}
       <section style={{ background: '#c8370a' }}>
         <div style={{ maxWidth: 1200, margin: '0 auto', padding: `0 ${px}`, display: 'grid', gridTemplateColumns: isMobile ? '1fr 1fr' : 'repeat(4,1fr)' }}>
@@ -83,7 +87,7 @@ export default function HomePage() {
           ))}
         </div>
       </section>
- 
+
       {/* TRIPS */}
       <section style={{ background: '#080c10', padding: `${py} 0` }}>
         <div style={{ maxWidth: 1200, margin: '0 auto', padding: `0 ${px}` }}>
@@ -101,7 +105,7 @@ export default function HomePage() {
               View All 30+ Trips <svg width="16" height="8" viewBox="0 0 16 8" fill="none"><path d="M1 4h14M10 1l5 3-5 3" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"/></svg>
             </a>
           </div>
- 
+
           {/* Trip grid - single col on mobile, asymmetric on desktop */}
           {isMobile ? (
             <div style={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
@@ -179,7 +183,7 @@ export default function HomePage() {
           )}
         </div>
       </section>
- 
+
       {/* MANIFESTO */}
       <section style={{ position: 'relative', padding: `${isMobile ? '80px' : '160px'} 0`, overflow: 'hidden' }}>
         <div style={{ position: 'absolute', inset: 0 }}>
@@ -211,7 +215,7 @@ export default function HomePage() {
           </div>
         </div>
       </section>
- 
+
       {/* TESTIMONIALS */}
       <section style={{ background: '#0d1117', padding: `${py} 0` }}>
         <div style={{ maxWidth: 1200, margin: '0 auto', padding: `0 ${px}` }}>
@@ -240,7 +244,7 @@ export default function HomePage() {
           </div>
         </div>
       </section>
- 
+
       {/* MARQUEE */}
       <section style={{ background: '#c8370a', padding: '16px 0', overflow: 'hidden' }}>
         <div style={{ display: 'flex', animation: 'marquee 22s linear infinite', whiteSpace: 'nowrap', width: 'max-content' }}>
@@ -251,7 +255,7 @@ export default function HomePage() {
           )}
         </div>
       </section>
- 
+
       {/* FINAL CTA */}
       <section style={{ position: 'relative', padding: `${isMobile ? '80px' : '160px'} ${px}`, background: '#080c10', overflow: 'hidden', textAlign: 'center' }}>
         <div style={{ position: 'absolute', inset: 0, opacity: 0.022, backgroundImage: 'repeating-linear-gradient(-45deg, rgba(255,255,255,0.6) 0, rgba(255,255,255,0.6) 1px, transparent 0, transparent 50%)', backgroundSize: '28px 28px' }} />
@@ -271,7 +275,7 @@ export default function HomePage() {
           </div>
         </div>
       </section>
- 
+
       {/* FOOTER */}
       <footer style={{ background: '#0d1117', borderTop: '1px solid rgba(255,255,255,0.04)', padding: `48px ${px} 32px` }}>
         <div style={{ maxWidth: 1200, margin: '0 auto' }}>
@@ -308,7 +312,7 @@ export default function HomePage() {
           </div>
         </div>
       </footer>
- 
+
       <style>{`@keyframes marquee { from { transform: translateX(0) } to { transform: translateX(-25%) } }`}</style>
     </div>
   )
