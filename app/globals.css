@@ -4,14 +4,138 @@
 @tailwind components;
 @tailwind utilities;
 
+* { box-sizing: border-box; margin: 0; padding: 0; }
 html { scroll-behavior: smooth; }
+body { -webkit-font-smoothing: antialiased; }
 
-body {
-  background-color: #f5f2ec;
-  color: #0f1923;
-  -webkit-font-smoothing: antialiased;
+input::placeholder, textarea::placeholder { color: rgba(255,255,255,0.2); }
+select option { background: #0d1117; color: #fff; }
+input[type=range]::-webkit-slider-thumb { background: #c8370a; }
+
+/* ─── GLOBAL MOBILE NAVBAR ─── */
+.mobile-nav-toggle { display: none; }
+
+@media (max-width: 768px) {
+
+  /* Hide desktop nav links, show hamburger */
+  .desktop-nav { display: none !important; }
+  .mobile-nav-toggle { display: flex !important; }
+
+  /* Hero headlines scale down */
+  h1[style*="clamp"] { font-size: clamp(44px, 11vw, 80px) !important; }
+
+  /* Hero content padding */
+  .hero-content { padding: 0 24px 56px !important; }
+
+  /* Grids → single column */
+  .grid-2col, .grid-3col, .grid-4col {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* Stats strip → 2 col */
+  .stats-grid {
+    grid-template-columns: 1fr 1fr !important;
+  }
+
+  /* Section padding reduce */
+  .section-pad {
+    padding: 72px 0 !important;
+  }
+
+  /* Inner section padding */
+  .inner-pad {
+    padding-left: 24px !important;
+    padding-right: 24px !important;
+  }
+
+  /* Trip card image height */
+  .trip-card-img { height: 200px !important; }
+
+  /* Footer grid */
+  .footer-grid {
+    grid-template-columns: 1fr !important;
+    gap: 36px !important;
+  }
+
+  /* Footer link columns */
+  .footer-links-grid {
+    grid-template-columns: 1fr 1fr !important;
+    gap: 24px !important;
+  }
+
+  /* Guide alternating layout */
+  .guide-grid {
+    grid-template-columns: 1fr !important;
+  }
+  .guide-grid > div { order: unset !important; }
+
+  /* Manifesto section */
+  .manifesto-grid {
+    grid-template-columns: 1fr !important;
+    gap: 48px !important;
+  }
+
+  /* Values grid */
+  .values-grid {
+    grid-template-columns: 1fr 1fr !important;
+  }
+
+  /* Testimonials */
+  .testimonials-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* Contact grid */
+  .contact-grid {
+    grid-template-columns: 1fr !important;
+    gap: 48px !important;
+  }
+
+  /* Form 2-col → 1-col */
+  .form-2col {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* CTA band */
+  .cta-band {
+    grid-template-columns: 1fr !important;
+    text-align: center !important;
+  }
+
+  /* Custom trip CTA */
+  .custom-trip-cta {
+    grid-template-columns: 1fr !important;
+    text-align: center !important;
+  }
+
+  /* Filter bar scroll */
+  .filter-row {
+    overflow-x: auto !important;
+    flex-wrap: nowrap !important;
+    padding-bottom: 8px !important;
+  }
+
+  /* Mission image stack */
+  .mission-images {
+    height: 320px !important;
+  }
+
+  /* Hero trust badges — hide on small screens */
+  .hero-trust { display: none !important; }
+
+  /* Hero CTA buttons stack */
+  .hero-ctas {
+    flex-direction: column !important;
+    gap: 10px !important;
+  }
+  .hero-ctas a { text-align: center !important; justify-content: center !important; }
+
+  /* Stat border on mobile */
+  .stat-item { border-right: none !important; border-bottom: 1px solid rgba(255,255,255,0.06) !important; }
+  .stat-item:last-child { border-bottom: none !important; }
 }
 
-::-webkit-scrollbar { width: 6px; }
-::-webkit-scrollbar-track { background: #0f1923; }
-::-webkit-scrollbar-thumb { background: #d4420a; border-radius: 3px; }
+@media (max-width: 480px) {
+  .values-grid { grid-template-columns: 1fr !important; }
+  .footer-links-grid { grid-template-columns: 1fr !important; }
+}

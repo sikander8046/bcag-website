@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react'
 import Link from 'next/link'
+import MobileNav from '@/components/MobileNav'
 
 const trips = [
   { id: 'forbidden-tour', title: 'Forbidden Tour', category: 'SKI TRAVERSE', location: 'North Cascades', duration: '4 Days', difficulty: 'Expert', price: 1395, spotsLeft: 3, season: 'Spring', image: 'https://images.unsplash.com/photo-1551698618-1dfe5d97d256?w=900&q=90', shortDesc: 'The Cascades answer to the Haute Route. Three passes. Three peaks. Endless descents.' },
@@ -54,29 +55,9 @@ export default function HomePage() {
         <div style={{ position: 'absolute', inset: 0, opacity: 0.035, backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")`, backgroundRepeat: 'repeat', backgroundSize: '128px' }} />
 
         {/* Navbar */}
-        <div style={{ position: 'absolute', top: 0, left: 0, right: 0, padding: '28px 48px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', zIndex: 20 }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
-            <div style={{ width: 36, height: 36, background: '#c8370a', display: 'flex', alignItems: 'center', justifyContent: 'center', clipPath: 'polygon(0 0, 100% 0, 100% 72%, 72% 100%, 0 100%)' }}>
-              <span style={{ fontFamily: "'Bebas Neue',sans-serif", color: '#fff', fontSize: 14, letterSpacing: 1 }}>BC</span>
-            </div>
-            <div>
-              <div style={{ fontFamily: "'Bebas Neue',sans-serif", color: '#fff', fontSize: 16, letterSpacing: '0.15em', lineHeight: 1 }}>ADVENTURE GUIDES</div>
-              <div style={{ fontFamily: 'monospace', color: 'rgba(255,255,255,0.3)', fontSize: 7.5, letterSpacing: '0.22em', textTransform: 'uppercase' }}>IFMGA · AMGA Certified</div>
-            </div>
-          </div>
-          <nav style={{ display: 'flex', alignItems: 'center', gap: 28 }}>
-            {[['Ski & Board','/trips'],['Alpine','/trips'],['Rock','/trips'],['Avalanche','/trips'],['About','/about']].map(([label, href]) => (
-              <a key={label} href={href} style={{ color: 'rgba(255,255,255,0.55)', fontSize: 11, letterSpacing: '0.1em', textTransform: 'uppercase', textDecoration: 'none', fontWeight: 500, transition: 'color 0.2s' }}
-                onMouseEnter={e => e.target.style.color = '#fff'}
-                onMouseLeave={e => e.target.style.color = 'rgba(255,255,255,0.55)'}
-              >{label}</a>
-            ))}
-            <a href="/contact" style={{ background: 'transparent', border: '1px solid rgba(255,255,255,0.25)', color: '#fff', padding: '8px 22px', fontSize: 10, letterSpacing: '0.14em', textTransform: 'uppercase', textDecoration: 'none', fontWeight: 600, transition: 'all 0.2s' }}
-              onMouseEnter={e => { e.currentTarget.style.background = '#c8370a'; e.currentTarget.style.borderColor = '#c8370a' }}
-              onMouseLeave={e => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.borderColor = 'rgba(255,255,255,0.25)' }}
-            >Contact</a>
-          </nav>
-        </div>
+        <MobileNav />
+
+
 
         {/* Hero content */}
         <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, padding: '0 48px 80px', display: 'grid', gridTemplateColumns: '1fr auto', alignItems: 'flex-end', gap: 40, zIndex: 10 }}>
