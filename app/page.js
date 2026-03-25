@@ -1,15 +1,9 @@
 'use client'
 import { useEffect, useState } from 'react'
 import MobileNav from '@/components/MobileNav'
+import { trips as allTrips } from '@/lib/data'
 
-const trips = [
-  { id: 'forbidden-tour', title: 'Forbidden Tour', category: 'SKI TRAVERSE', location: 'North Cascades', duration: '4 Days', difficulty: 'Expert', price: 1395, spotsLeft: 3, season: 'Spring', image: 'https://images.unsplash.com/photo-1551698618-1dfe5d97d256?w=900&q=90', shortDesc: 'The Cascades answer to the Haute Route. Three passes. Three peaks. Endless descents.' },
-  { id: 'steep-camp', title: 'Steep Camp', category: 'SKI COURSE', location: 'North Cascades', duration: '3 Days', difficulty: 'Advanced', price: 975, spotsLeft: 5, season: 'Winter', image: 'https://images.unsplash.com/photo-1548550023-2bdb3c5beed7?w=900&q=90', shortDesc: 'Master technical steep terrain. Small groups. Maximum progression.' },
-  { id: 'aiare-level-1', title: 'AIARE Level 1', category: 'AVALANCHE', location: 'Washington Cascades', duration: '3 Days', difficulty: 'Beginner', price: 650, spotsLeft: 8, season: 'Winter', image: 'https://images.unsplash.com/photo-1519904981063-b0cf448d479e?w=900&q=90', shortDesc: 'The gold standard in avalanche education. Could save your life.' },
-  { id: 'chamonix-climbing', title: 'Chamonix Alps', category: 'ALPINE CLIMB', location: 'Chamonix, France', duration: '8 Days', difficulty: 'Advanced', price: 3200, spotsLeft: 2, season: 'Summer', image: 'https://images.unsplash.com/photo-1502126324834-38f8e02d7160?w=900&q=90', shortDesc: 'Classics of the Mont Blanc massif with IFMGA certified guides.' },
-  { id: 'alaska-ski-mo', title: 'Alaska Range', category: 'EXPEDITION', location: 'Alaska Range', duration: '10 Days', difficulty: 'Expert', price: 4800, spotsLeft: 4, season: 'Spring', image: 'https://images.unsplash.com/photo-1516592673884-4a382d1124c2?w=900&q=90', shortDesc: 'Fly-in glacier skiing. First descents. Remote camps. Ten days.' },
-  { id: 'morning-star-peak', title: 'Morning Star', category: 'ROCK CLIMB', location: 'North Cascades', duration: '1 Day', difficulty: 'Intermediate', price: 425, spotsLeft: 6, season: 'Summer', image: 'https://images.unsplash.com/photo-1522163182402-834f871fd851?w=900&q=90', shortDesc: 'Classic multi-pitch granite. II+ 5.10a. Best moderate in the range.' },
-]
+const trips = allTrips.slice(0, 6)
 
 const difficultyConfig = {
   Beginner: { dot: '#4ade80' }, Intermediate: { dot: '#60a5fa' },
