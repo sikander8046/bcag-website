@@ -1,69 +1,53 @@
-import Link from 'next/link'
-import { Phone, Mail, MapPin, Instagram, Facebook } from 'lucide-react'
+'use client'
+import { useMediaQuery } from '@/hooks/useMediaQuery'
+import { colors, fonts, spacing } from '@/lib/tokens'
+
+const FOOTER_COLS = [
+  { title: 'Trips', links: ['Ski & Splitboard', 'Alpine Climbing', 'Rock Climbing', 'Avalanche'] },
+  { title: 'Company', links: ['About BCAG', 'Our Guides', 'Testimonials', 'Contact'] },
+  { title: 'Resources', links: ['Trip Policy', 'Gear Lists', 'Rentals', 'Blog'] },
+]
 
 export default function Footer() {
+  const isMobile = useMediaQuery(`(max-width: ${spacing.maxWidth}px)`.replace('1200', '768'))
+
+  const px = isMobile ? spacing.pagePaddingMobile : spacing.pagePaddingDesktop
+
   return (
-    <footer className="bg-[#0f1923] text-white">
-      <div className="bg-[#d4420a] py-12 px-6">
-        <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
+    <footer style={{ background: colors.bgSecondary, borderTop: `1px solid ${colors.borderSubtle}`, padding: `48px ${px} 32px` }}>
+      <div style={{ maxWidth: spacing.maxWidth, margin: '0 auto' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : 'auto 1fr', gap: isMobile ? 32 : 72, marginBottom: 36 }}>
+
+          {/* Brand + contact */}
           <div>
-            <h3 style={{fontFamily:'Bebas Neue,sans-serif'}} className="text-3xl md:text-4xl tracking-wide text-white mb-1">READY FOR YOUR NEXT ADVENTURE?</h3>
-            <p className="text-white/70 text-sm">IFMGA certified guides. World-class terrain. Unforgettable experiences.</p>
-          </div>
-          <div className="flex gap-3 flex-shrink-0">
-            <Link href="/trips" className="bg-white text-[#d4420a] font-semibold px-6 py-3 rounded text-sm hover:bg-[#f5f2ec] transition-colors">Browse Trips</Link>
-            <Link href="/contact" className="border border-white/40 text-white font-semibold px-6 py-3 rounded text-sm hover:bg-white/10 transition-colors">Talk to a Guide</Link>
-          </div>
-        </div>
-      </div>
-      <div className="max-w-7xl mx-auto px-6 py-16">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
-          <div className="lg:col-span-2">
-            <Link href="/" className="flex items-center gap-3 mb-5">
-              <div className="w-8 h-8 bg-[#d4420a] rounded flex items-center justify-center">
-                <span style={{fontFamily:'Bebas Neue,sans-serif'}} className="text-white text-sm">BC</span>
+            <a href="/" style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 14, textDecoration: 'none' }}>
+              <div style={{ width: 28, height: 28, background: colors.accent, display: 'flex', alignItems: 'center', justifyContent: 'center', clipPath: 'polygon(0 0, 100% 0, 100% 72%, 72% 100%, 0 100%)', flexShrink: 0 }}>
+                <span style={{ fontFamily: fonts.display, color: colors.textPrimary, fontSize: 11 }}>BC</span>
               </div>
-              <div>
-                <span style={{fontFamily:'Bebas Neue,sans-serif'}} className="text-white text-lg tracking-widest block leading-none">ADVENTURE GUIDES</span>
-              </div>
-            </Link>
-            <p className="text-white/40 text-sm leading-relaxed mb-5 max-w-xs">All programs directed by Ian Nicholson and Matt Schonwald, IFMGA/AMGA Mountain Guides.</p>
-            <div className="space-y-2">
-              <a href="tel:2067994092" className="flex items-center gap-2 text-white/40 hover:text-white text-sm transition-colors"><Phone size={13} />(206) 799-4092</a>
-              <a href="mailto:info@bcadventureguides.com" className="flex items-center gap-2 text-white/40 hover:text-white text-sm transition-colors"><Mail size={13} />info@bcadventureguides.com</a>
-              <div className="flex items-center gap-2 text-white/40 text-sm"><MapPin size={13} />Seattle, WA</div>
-            </div>
-            <div className="flex gap-3 mt-4">
-              <a href="#" className="w-8 h-8 border border-white/20 rounded flex items-center justify-center text-white/40 hover:text-white transition-colors"><Instagram size={14} /></a>
-              <a href="#" className="w-8 h-8 border border-white/20 rounded flex items-center justify-center text-white/40 hover:text-white transition-colors"><Facebook size={14} /></a>
+              <span style={{ fontFamily: fonts.display, color: colors.textPrimary, fontSize: 13, letterSpacing: '0.15em' }}>ADVENTURE GUIDES</span>
+            </a>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
+              <a href="tel:2067994092" style={{ color: 'rgba(255,255,255,0.28)', fontSize: 11, fontFamily: fonts.mono, textDecoration: 'none' }}>(206) 799-4092</a>
+              <a href="mailto:info@bcadventureguides.com" style={{ color: 'rgba(255,255,255,0.28)', fontSize: 11, fontFamily: fonts.mono, textDecoration: 'none' }}>info@bcadventureguides.com</a>
             </div>
           </div>
-          <div>
-            <h4 className="font-mono text-[10px] tracking-[0.15em] uppercase text-white/30 mb-4">Trips</h4>
-            <ul className="space-y-2">
-              {['Ski & Splitboard','Alpine Climbing','Rock Climbing','Avalanche Courses',"Women's Programs"].map(l => (
-                <li key={l}><Link href="/trips" className="text-sm text-white/40 hover:text-white transition-colors">{l}</Link></li>
-              ))}
-            </ul>
-          </div>
-          <div>
-            <h4 className="font-mono text-[10px] tracking-[0.15em] uppercase text-white/30 mb-4">Company</h4>
-            <ul className="space-y-2">
-              {[['About', '/about'],['Our Guides', '/about#guides'],['Testimonials', '/about#testimonials'],['Contact', '/contact']].map(([l, h]) => (
-                <li key={l}><Link href={h} className="text-sm text-white/40 hover:text-white transition-colors">{l}</Link></li>
-              ))}
-            </ul>
-          </div>
-        </div>
-        <div className="mt-12 pt-8 border-t border-white/10 flex flex-col md:flex-row items-center justify-between gap-4">
-          <div className="flex flex-wrap items-center gap-3">
-            {['IFMGA Certified','AMGA Certified','USFS Permitted'].map(b => (
-              <div key={b} className="border border-white/20 px-3 py-1 rounded">
-                <span className="font-mono text-[9px] tracking-widest uppercase text-white/40">{b}</span>
+
+          {/* Link columns */}
+          <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr 1fr' : 'repeat(3, 1fr)', gap: isMobile ? 24 : 40 }}>
+            {FOOTER_COLS.map(col => (
+              <div key={col.title}>
+                <div style={{ fontFamily: fonts.mono, fontSize: 8, letterSpacing: '0.2em', textTransform: 'uppercase', color: colors.textFaint, marginBottom: 12 }}>{col.title}</div>
+                {col.links.map(link => (
+                  <a key={link} href="/trips" style={{ display: 'block', color: colors.textMuted, fontSize: 12, textDecoration: 'none', marginBottom: 8 }}>{link}</a>
+                ))}
               </div>
             ))}
           </div>
-          <p className="font-mono text-[10px] text-white/20">© {new Date().getFullYear()} BC Adventure Guides</p>
+        </div>
+
+        <div style={{ borderTop: `1px solid ${colors.borderSubtle}`, paddingTop: 18, display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap', gap: 8 }}>
+          <span style={{ fontFamily: fonts.mono, fontSize: 10, color: 'rgba(255,255,255,0.14)' }}>© {new Date().getFullYear()} BC Adventure Guides</span>
+          <span style={{ fontFamily: fonts.mono, fontSize: 10, color: 'rgba(255,255,255,0.14)' }}>Images © Pablo Puruncajas</span>
         </div>
       </div>
     </footer>

@@ -1,6 +1,6 @@
 'use client'
 import { useEffect, useState } from 'react'
-import MobileNav from '@/components/MobileNav'
+import { useMediaQuery } from '@/hooks/useMediaQuery'
 import { trips as allTrips } from '@/lib/data'
 
 const trips = allTrips.slice(0, 6)
@@ -14,16 +14,13 @@ export default function HomePage() {
   const [heroLoaded, setHeroLoaded] = useState(false)
   const [scrollY, setScrollY] = useState(0)
   const [hoveredTrip, setHoveredTrip] = useState(null)
-  const [isMobile, setIsMobile] = useState(false)
+  const isMobile = useMediaQuery('(max-width: 768px)')
 
   useEffect(() => {
     const timer = setTimeout(() => setHeroLoaded(true), 100)
     const handleScroll = () => setScrollY(window.scrollY)
-    const checkMobile = () => setIsMobile(window.innerWidth <= 768)
-    checkMobile()
     window.addEventListener('scroll', handleScroll, { passive: true })
-    window.addEventListener('resize', checkMobile)
-    return () => { clearTimeout(timer); window.removeEventListener('scroll', handleScroll); window.removeEventListener('resize', checkMobile) }
+    return () => { clearTimeout(timer); window.removeEventListener('scroll', handleScroll) }
   }, [])
 
   const px = isMobile ? '20px' : '48px'
@@ -34,11 +31,6 @@ export default function HomePage() {
 
       {/* HERO */}
       <section style={{ position: 'relative', height: '100vh', minHeight: 600, overflow: 'hidden' }}>
-        {/* Navbar sits inside hero so it overlays the image */}
-        <div style={{ position: 'absolute', top: 0, left: 0, right: 0, zIndex: 50 }}>
-          <MobileNav />
-        </div>
-
         <div style={{ position: 'absolute', inset: 0, transform: isMobile ? 'none' : `translateY(${scrollY * 0.35}px)` }}>
           <img src="https://images.unsplash.com/photo-1551698618-1dfe5d97d256?w=1920&q=95" alt="" style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center 30%' }} />
         </div>
@@ -269,43 +261,6 @@ export default function HomePage() {
           </div>
         </div>
       </section>
-
-      {/* FOOTER */}
-      <footer style={{ background: '#0d1117', borderTop: '1px solid rgba(255,255,255,0.04)', padding: `48px ${px} 32px` }}>
-        <div style={{ maxWidth: 1200, margin: '0 auto' }}>
-          <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : 'auto 1fr auto', gap: isMobile ? 36 : 72, alignItems: 'start', marginBottom: 40 }}>
-            <div>
-              <a href="/" style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 14, textDecoration: 'none' }}>
-                <div style={{ width: 28, height: 28, background: '#c8370a', display: 'flex', alignItems: 'center', justifyContent: 'center', clipPath: 'polygon(0 0, 100% 0, 100% 72%, 72% 100%, 0 100%)' }}><span style={{ fontFamily: "'Bebas Neue',sans-serif", color: '#fff', fontSize: 11 }}>BC</span></div>
-                <span style={{ fontFamily: "'Bebas Neue',sans-serif", color: '#fff', fontSize: 13, letterSpacing: '0.15em' }}>ADVENTURE GUIDES</span>
-              </a>
-              <p style={{ color: 'rgba(255,255,255,0.2)', fontSize: 11, lineHeight: 1.7, maxWidth: 220, margin: '0 0 14px' }}>IFMGA/AMGA Mountain Guides. Seattle, WA.</p>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
-                <a href="tel:2067994092" style={{ color: 'rgba(255,255,255,0.28)', fontSize: 11, fontFamily: 'monospace', textDecoration: 'none' }}>(206) 799-4092</a>
-                <a href="mailto:info@bcadventureguides.com" style={{ color: 'rgba(255,255,255,0.28)', fontSize: 11, fontFamily: 'monospace', textDecoration: 'none' }}>info@bcadventureguides.com</a>
-              </div>
-            </div>
-            <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr 1fr' : 'repeat(3,1fr)', gap: isMobile ? 24 : 40 }}>
-              {[{title:'Trips',links:['Ski & Splitboard','Alpine Climbing','Rock Climbing','Avalanche Courses']},{title:'Company',links:['About BCAG','Our Guides','Testimonials','Contact']},{title:'Resources',links:['Trip Policy','Gear Lists','Rentals','Blog']}].map(col => (
-                <div key={col.title}>
-                  <div style={{ fontFamily: 'monospace', fontSize: 8, letterSpacing: '0.2em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.2)', marginBottom: 12 }}>{col.title}</div>
-                  {col.links.map(link => <a key={link} href="/trips" style={{ display: 'block', color: 'rgba(255,255,255,0.35)', fontSize: 12, textDecoration: 'none', marginBottom: 8 }}>{link}</a>)}
-                </div>
-              ))}
-            </div>
-            {!isMobile && (
-              <div>
-                <div style={{ fontFamily: 'monospace', fontSize: 8, letterSpacing: '0.2em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.2)', marginBottom: 12 }}>Certified</div>
-                {['IFMGA','AMGA','USFS'].map(b => <div key={b} style={{ border: '1px solid rgba(255,255,255,0.09)', padding: '6px 12px', marginBottom: 6, display: 'block', width: 'fit-content' }}><span style={{ fontFamily: 'monospace', fontSize: 8, letterSpacing: '0.2em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.3)' }}>{b}</span></div>)}
-              </div>
-            )}
-          </div>
-          <div style={{ borderTop: '1px solid rgba(255,255,255,0.06)', paddingTop: 18, display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap', gap: 8 }}>
-            <span style={{ fontFamily: 'monospace', fontSize: 10, color: 'rgba(255,255,255,0.14)' }}>© {new Date().getFullYear()} BC Adventure Guides</span>
-            <span style={{ fontFamily: 'monospace', fontSize: 10, color: 'rgba(255,255,255,0.14)' }}>Images © Pablo Puruncajas</span>
-          </div>
-        </div>
-      </footer>
 
       <style>{`@keyframes marquee { from { transform: translateX(0) } to { transform: translateX(-25%) } }`}</style>
     </div>

@@ -1,7 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
-import MobileNav from '@/components/MobileNav'
+import { useMediaQuery } from '@/hooks/useMediaQuery'
 
 const guides = [
   {
@@ -32,22 +31,13 @@ const testimonials = [
 ]
 
 export default function AboutPage() {
-  const [isMobile, setIsMobile] = useState(false)
-
-  useEffect(() => {
-    const check = () => setIsMobile(window.innerWidth <= 768)
-    check()
-    window.addEventListener('resize', check)
-    return () => window.removeEventListener('resize', check)
-  }, [])
+  const isMobile = useMediaQuery('(max-width: 768px)')
 
   const px = isMobile ? '20px' : '48px'
   const py = isMobile ? '72px' : '120px'
 
   return (
     <div style={{ background: '#080c10', minHeight: '100vh', fontFamily: "'DM Sans', sans-serif", overflowX: 'hidden' }}>
-      <MobileNav activePage="About" />
-
       {/* HERO */}
       <section style={{ position: 'relative', height: isMobile ? '50vh' : '65vh', minHeight: isMobile ? 360 : 500, overflow: 'hidden', paddingTop: 64 }}>
         <img src="https://images.unsplash.com/photo-1516592673884-4a382d1124c2?w=1920&q=90" alt="" style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center 40%', position: 'absolute', inset: 0 }} />
@@ -211,35 +201,6 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* FOOTER */}
-      <footer style={{ background: '#0d1117', borderTop: '1px solid rgba(255,255,255,0.04)', padding: `48px ${px} 32px` }}>
-        <div style={{ maxWidth: 1200, margin: '0 auto' }}>
-          <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : 'auto 1fr auto', gap: isMobile ? 32 : 72, marginBottom: 36 }}>
-            <div>
-              <a href="/" style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 12, textDecoration: 'none' }}>
-                <div style={{ width: 28, height: 28, background: '#c8370a', display: 'flex', alignItems: 'center', justifyContent: 'center', clipPath: 'polygon(0 0, 100% 0, 100% 72%, 72% 100%, 0 100%)' }}><span style={{ fontFamily: "'Bebas Neue',sans-serif", color: '#fff', fontSize: 11 }}>BC</span></div>
-                <span style={{ fontFamily: "'Bebas Neue',sans-serif", color: '#fff', fontSize: 13, letterSpacing: '0.15em' }}>ADVENTURE GUIDES</span>
-              </a>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
-                <a href="tel:2067994092" style={{ color: 'rgba(255,255,255,0.28)', fontSize: 11, fontFamily: 'monospace', textDecoration: 'none' }}>(206) 799-4092</a>
-                <a href="mailto:info@bcadventureguides.com" style={{ color: 'rgba(255,255,255,0.28)', fontSize: 11, fontFamily: 'monospace', textDecoration: 'none' }}>info@bcadventureguides.com</a>
-              </div>
-            </div>
-            <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr 1fr' : 'repeat(3,1fr)', gap: isMobile ? 24 : 40 }}>
-              {[{title:'Trips',links:['Ski & Splitboard','Alpine Climbing','Rock Climbing','Avalanche']},{title:'Company',links:['About BCAG','Our Guides','Testimonials','Contact']},{title:'Resources',links:['Trip Policy','Gear Lists','Rentals','Blog']}].map(col => (
-                <div key={col.title}>
-                  <div style={{ fontFamily: 'monospace', fontSize: 8, letterSpacing: '0.2em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.2)', marginBottom: 12 }}>{col.title}</div>
-                  {col.links.map(link => <a key={link} href="/trips" style={{ display: 'block', color: 'rgba(255,255,255,0.35)', fontSize: 12, textDecoration: 'none', marginBottom: 8 }}>{link}</a>)}
-                </div>
-              ))}
-            </div>
-          </div>
-          <div style={{ borderTop: '1px solid rgba(255,255,255,0.06)', paddingTop: 18, display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap', gap: 8 }}>
-            <span style={{ fontFamily: 'monospace', fontSize: 10, color: 'rgba(255,255,255,0.14)' }}>© {new Date().getFullYear()} BC Adventure Guides</span>
-            <span style={{ fontFamily: 'monospace', fontSize: 10, color: 'rgba(255,255,255,0.14)' }}>Images © Pablo Puruncajas</span>
-          </div>
-        </div>
-      </footer>
     </div>
   )
 }
